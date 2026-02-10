@@ -7,7 +7,7 @@
     <!--Remote Resources-->
 
     <!--Stylesheets-->
-    <link rel="stylesheets" type="test/css" href="{{ get_url(path="main.css", trailing_slash=false) }}"> 
+    <link rel="stylesheet" type="text/css" href="{{ get_url(path="main.css", trailing_slash=false) }}"> 
 
     <title></title>
   </head>
@@ -15,7 +15,8 @@
   <body>
 
     <div class="links">
-      <h1 class="Title"><a href="/">{{ config.title }}</a></h1>
+
+      <h1 class="Title"><a href="{{ config.base_url }}">{{ config.title }}</a></h1>
       <ul>
         {% for link in config.extra.links %}
         <li>

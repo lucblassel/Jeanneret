@@ -1,0 +1,6 @@
+# Ignore shortcodes
+templates/shortcodes/*
+templates/macros/*
+
+# Ignore css
+sass/*
