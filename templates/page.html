@@ -1,0 +1,15 @@
+{% extends "index.html" %} {% block content %}
+<div class="post">
+  <h1 class="post-title">{{ page.title }}</h1>
+  <div class="post-meta">
+    <span class="post-date"> {{ page.date | date(format="%Y-%m-%d")}}</span>
+    <div class="post-authors">
+      {% for author in page.authors%}
+      <span>{{ author | safe }}</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="prose">{{ page.content | safe }}</div>
+</div>
+{% endblock %}
