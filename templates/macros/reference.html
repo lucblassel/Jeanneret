@@ -1,0 +1,56 @@
+{% macro preprint(title="", year="", authors_fmt="", publisher="", doi="") %}
+  {% set_global output = "" %}
+
+  {% if authors_fmt != "" %}
+    {% set_global output = output ~ authors_fmt %}
+  {% endif %}
+
+  {% if title != "" %}
+    {% if doi != "" %}
+      {% set anchor = "<a href=https://doi.org/{{doi}}>{{title}}</a>" | replace(from="{{doi}}", to=doi) | replace(from="{{title}}", to=title) %}
+      {% set_global output = output ~ " " ~ anchor %}
+    {% else %}
+      {% set_global output = output ~ " " ~ title %}
+    {% endif %}
+  {% endif %}
+
+  {% if publisher != "" %}
+    {% set_global output = output ~ ". <em>" ~ publisher ~ "</em>" %}
+  {% endif %}
+
+  {% if year != "" %}
+    {% set_global output = output ~ " (" ~ year ~ ")" %}
+  {% endif %}
+
+  {{- output | safe -}}
+    
+{%endmacro preprint %}
+
+
+{% macro journal(title="", year="", authors_fmt="", journal="", doi="") %}
+  {% set_global output = "" %}
+
+  {% if authors_fmt != "" %}
+    {% set_global output = output ~ authors_fmt %}
+  {% endif %}
+
+  {% if title != "" %}
+    {% if doi != "" %}
+      {% set anchor = "<a href=https://doi.org/{{doi}}>{{title}}</a>" | replace(from="{{doi}}", to=doi) | replace(from="{{title}}", to=title) %}
+      {% set_global output = output ~ " " ~ anchor %}
+    {% else %}
+      {% set_global output = output ~ " " ~ title %}
+    {% endif %}
+  {% endif %}
+
+  {% if journal != "" %}
+    {% set_global output = output ~ ". <em>" ~ journal ~ "</em>" %}
+  {% endif %}
+
+  {% if year != "" %}
+    {% set_global output = output ~ " (" ~ year ~ ")" %}
+  {% endif %}
+
+  {{- output | safe -}}
+    
+{%endmacro journal %}

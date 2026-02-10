@@ -1,0 +1,12 @@
+
+{% set talks_data = load_data(path=path, format="csv") %}
+
+<ul>
+  {% for record in talks_data.records %}
+  <li>
+    <b>"{{ record[0] }}"</b> ({{ record[2] | date(format="%B %d %Y", timezone="Europe/Paris") }}), <em>{{ record[1] }}</em> 
+    {% if record[3] != "" %}(<a href="/slides/{{ record[3] }}">slides</a>){% endif %}
+    {% if record[4] != "" %}<br><em>* {{record[4]}}</em>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
