@@ -67,7 +67,7 @@ Mundi velocia `veronica_portal` honor; pennis maris omnia, est aula confundas
 ulla; dentes et plurima clamat tibi reddunt croceum. Est ab solo morte relictum
 opem metu veste meoque `server_odbc` pete mater naresque egerat, satyrique.
 
-![This is some alt-test](/images/10000_reds_backed.png)
+![This is some alt-test](https://media.istockphoto.com/id/816752606/photo/tv-test-card-or-test-pattern-generic.jpg?s=612x612&w=0&k=20&c=63Jcx_5bFnvBw9elRDLrLKjtDYXr70pKtUK0jXJ2_uY=)
 
 
 ## Nondum flens aberant
