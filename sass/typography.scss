@@ -1,0 +1,120 @@
+/*
+  Adapted from: 
+   - https://github.com/vladocar/Basic-CSS-Typography-Reset (MIT)
+   - https://github.com/poole/hyde (MIT)
+   - https://github.com/poole/poole (MIT)
+ */
+
+
+$title-font: "Harding Text Web Regular Regular", sans-serif;
+$text-font: "Andada Pro", "Ancizar Serif", serif;
+$mono-font: "Fira Code", monospace;
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%
+}
+
+/* General settings */
+
+body {
+  font-family: $text-font;
+  font-weight: 400;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+img,
+iframe {
+  border: none
+}
+
+@media (min-width: 38em) {
+  html {
+    font-size: 20px;
+  }
+}
+  
+/* Headings */
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: .5rem;
+  font-weight: bold;
+  line-height: 1.25;
+  font-family: $title-font;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+
+h3 {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+}
+
+h4, h5, h6 {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+/* Body text */
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* HTML tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th,td {
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Code */
+
+pre, code {
+  font-family: $mono-font;
+}
+
+pre {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  font-size: 90%;
+  line-height: 1.4;
+  overflow-x: scroll;
+  border-radius: 0.3rem;
+}
+
+pre code {
+  padding: 0;
+  font-size: 100%;
+  color: inherit;
+  font-family: $mono-font;
+  background-color: transparent;
+}
+
+/* Links */
+a {
+  color: #3366CC; // Wiki Blue
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  text-decoration: underline;
+}
+

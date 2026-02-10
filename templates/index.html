@@ -2,9 +2,17 @@
 <html>
   <head>
     <!--Meta & SEO-->
-    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-    <!--Remote Resources-->
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400..840;1,400..840&family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/7732caef9ed946f7916b3f650e8837c2?family=Harding+Text+Web+Regular+Regular"> 
 
     <!--Stylesheets-->
     <link rel="stylesheet" type="text/css" href="{{ get_url(path="main.css", trailing_slash=false) }}"> 
@@ -13,22 +21,30 @@
   </head>
 
   <body>
+    <div class="layout {% if config.extra.css_debug %}debug{% endif %}">
 
-    <div class="links">
+        <!--Sidebar/Header-->
+        <header class="site-header">
+          <a href="{{ config.base_url }}"><h1 class="site-title">{{ config.title }}</h1></a>
 
-      <h1 class="Title"><a href="{{ config.base_url }}">{{ config.title }}</a></h1>
-      <ul>
-        {% for link in config.extra.links %}
-        <li>
-          {% set url = get_url(path=link.url) %}
-          <a href="{{ url }}"><h2>{{link.name}}</h2></a>
-        </li>
-        {% endfor %}
-      </ul>
-      
+          <nav class="site-nav">
+            {% for link in config.extra.links %}
+              {% set url = get_url(path=link.url) %}
+              <a href="{{ url }}"><h2>{{link.name}}</h2></a>
+            {% endfor %}            
+          </nav>
+        </header>
+
+        <!--Main Page Content-->
+        <div class="content-stack">
+          <div class="content">
+                {% block content %}{% endblock %}
+          </div>
+
+          <footer class="site-footer">
+          Built with <a href="http://www.getzola.org">Zola</a>, © {{ config.author }} {{ now() | date(format="%Y") }}
+          </footer>          
+        </div>
     </div>
-
-    {% block content %}
-    {% endblock %}
   </body>
 </html>

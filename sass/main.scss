@@ -1,79 +1,97 @@
 /*
- * GLOBAL RESET
- *
- * https://www.joshwcomeau.com/css/custom-css-reset/
+ *   888888                                                              888    
+ *     "88b                                                              888    
+ *      888                                                              888    
+ *      888  .d88b.   8888b.  88888b.  88888b.   .d88b.  888d888 .d88b.  888888 
+ *      888 d8P  Y8b     "88b 888 "88b 888 "88b d8P  Y8b 888P"  d8P  Y8b 888    
+ *      888 88888888 .d888888 888  888 888  888 88888888 888    88888888 888    
+ *      88P Y8b.     888  888 888  888 888  888 Y8b.     888    Y8b.     Y88b.  
+ *      888  "Y8888  "Y888888 888  888 888  888  "Y8888  888     "Y8888   "Y888 
+ *    .d88P                                                                     
+ *  .d88P"                                                                      
+ * 888P"
+ * 
+ *  Some of this is adapted from Hyde theme
  */
 
-// More intuitive box-sizing model
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+
+// Apply global CSS reset
+@import "reset";
+
+// Typographic settings
+@import "typography";
+
+// debug view
+.debug * {
+  outline: 1px solid red;
 }
 
-// Remove default margins
-*:not(dialog) {
-  margin: 0;
+// Sidebar / header
+.site-header { // By default centered
+  text-align: center;
+  padding: 2rem 1rem;
 }
 
-// Allow keyword animations
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    interpolate-size: allow-keywords;
+// Navigation links
+.site-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: .5rem;
+
+  a,h1,h2{
+    margin: 0;
+    padding: 0;
   }
 }
 
-// Accessible line-height
-body {
-  line-height: 1.5; // 1.5x font-size
-  -webkit-font-smoothing: antialiased; // Better rendering
-
+// Main content
+.content-stack {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  // Ensures footer is at bottom of page
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-// Better media defaults
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
+.site-footer {
+ text-align: center;
+ margin-top: auto;
+ font-size: 90%;
+ padding: 0.5rem 0;
 }
 
-// Font inheritance for form inputs
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
-// Avoid text overflow
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
-}
-
-// Better wrapping algorithm for headings
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  text-wrap: balance;
-}
-
-// Better wrapping algorithm for prose
-p {
-  text-wrap: pretty;
-}
 
 /*
- * THEME ELEMENTS
+ * Responsive media queries 
  */
+
+@media(min-width: 48em) { 
+  // Sticky top left if screen is wide-enough
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 15rem;
+    text-align: left;
+    padding-left: 2rem;
+  }
+
+  // Switch to col flex if page is wide-enough
+  .site-nav {
+    flex-direction: column;
+      a {
+        margin-left: 1rem;
+      }
+  }
+  
+  // Limit width of the content stack if screen is wider
+  .content-stack { 
+    max-width: 38rem;
+    margin-left: 18rem;
+    margin-right: 2rem;
+  }
+}
+

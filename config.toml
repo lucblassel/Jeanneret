@@ -9,13 +9,11 @@ build_search_index = true
 
 title = "Jeanneret"
 
-[markdown]
-
-[markdown.highlighting]
-theme = "catppuccin-mocha"
+author = "Luc Blassel"
 
 [extra]
 links = [
   {name = "About", url = "about"},
   {name = "Posts", url = "posts"},
 ]
+css_debug = false
