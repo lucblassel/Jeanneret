@@ -1,5 +1,5 @@
-<!DOCTYPE>
-<html>
+<!DOCTYPE html>
+<html lang="{{ lang }}">
   <head>
     <!--Meta & SEO-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,12 +12,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400..840;1,400..840&family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/7732caef9ed946f7916b3f650e8837c2?family=Harding+Text+Web+Regular+Regular"> 
+    <!--<link rel="stylesheet" href="https://db.onlinewebfonts.com/c/7732caef9ed946f7916b3f650e8837c2?family=Harding+Text+Web+Regular+Regular"> -->
 
     <!--Stylesheets-->
     <link rel="stylesheet" type="text/css" href="{{ get_url(path="main.css", trailing_slash=false) }}"> 
 
-    <title></title>
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   </head>
 
   <body>
