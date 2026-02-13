@@ -1,0 +1,333 @@
+{# TODO: Fix \ escaping #}
+{% macro bibstrip(in) %}
+    {{ in 
+        | replace(from="---",to="—") 
+        | replace(from="--", to="-") 
+        | replace(from="{",to="") 
+        | replace(from="}", to="")  
+        | replace(from="\'e", to="é")
+        | replace(from="\'E", to="É")
+        | replace(from="\`e", to="è")
+        | replace(from="\`E", to="È")
+        | replace(from="\\", to="")
+        | trim()
+        | safe 
+    }}
+{% endmacro bibstrip%}
+
+{#
+  macro authors
+
+  Formats the author list as comma separated
+
+  If the "highlight_author" field is set to a number it will format
+  the corresponding author in <b></b> tags (0-indexed)
+#}
+{% macro authors(entry) %}
+  {% set highlight = entry.tags | get(key="highlight_author", default=-1) | int %}
+
+  {% set_global num=0 %}
+  {% set_global parts = [] %}
+
+  {# Build list of formated parts #}
+  {% set stripped = self::bibstrip(in=entry.tags.author) %}
+  {% for author in stripped | replace(from=" and ",to=" AND ") | split(pat=" AND ") %}
+    {% set author = author | trim()  %}
+    {% if num == highlight %}
+      {% set_global parts = parts | concat(with="<b>" ~ author ~ "</b>")%}      
+    {% else %}
+      {% set_global parts = parts | concat(with=author)%}      
+    {% endif %}
+
+    {% set_global num = num + 1 %}
+  {% endfor %}
+
+  {# Join list of authors #}
+  {{- parts | join(sep=", ") | trim() | trim_end_matches(pat=".") | safe -}}
+
+{% endmacro extract_name %}
+
+{#
+  macro title
+
+  Formats the title as a hyperlink if either "url" or "doi" are set. 
+  Otherwise it is simply the title text.
+#}
+{% macro title(entry) %}
+  {% set href = "" %}
+  {% if entry.tags | get(key="doi", default="") != "" %}
+    {% set_global href="https://doi.org/" ~ entry.tags.doi %}
+  {% elif entry.tags | get(key="url" , default="") != "" %}
+    {% set_global href=entry.tags.url %}
+  {% endif %}
+
+  {% set title = self::bibstrip(in=entry.tags.title) | trim() %}
+  {% if href != "" %}
+    <a href="{{href}}">{{- title -}}.</a>
+  {% else %}
+    {{- title -}}.
+  {% endif %}
+
+{% endmacro title %}
+
+{# 
+  @article entry type
+
+  required:
+    - author
+    - title
+    - journal
+    - year
+  
+  optional:
+    - volume
+    - pages
+#}
+{% macro article(entry) %}
+  {{- self::authors(entry=entry) | safe -}}.
+  {{- self::title(entry=entry) | safe -}} 
+  <em>{{- self::bibstrip(in=entry.tags.journal) | safe -}}</em>
+  {%- if entry.tags | get(key="volume") != "" -%}
+    <b>{{ entry.tags.volume }}</b>
+  {%- endif -%},
+  {%- if entry.tags | get(key="pages") != "" -%}
+    {{ self::bibstrip(in=entry.tags.pages) }}&nbsp;
+  {%- endif -%}
+  ({{ entry.tags.year }}).
+{% endmacro article %}
+
+{# 
+  @book entry type
+
+  required:
+    - author (or editor)
+    - title
+    - publisher
+    - year
+#}
+{% macro book(entry) %}
+  {% if entry.tags | get(key="author") != "" %}
+  {{- self::authors(entry=entry) | safe -}}.
+  {% else %}
+    {{- self::bibstrip(in=entry.tags.editor) -}}.
+  {% endif %}
+  <em>{{- self::title(entry=entry) | safe -}}</em> 
+  ({{- self::bibstrip(in=entry.tags.publisher) -}}, {{ entry.tags.year -}}).
+{% endmacro book %}
+
+{# 
+  @inbook entry type
+
+  required:
+    - author(or editor)
+    - title
+    - chapter and/or pages
+    - publisher
+    - year
+#}
+{% macro inbook(entry) %}
+  {% if entry.tags | get(key="author") != "" %}
+  {{- self::authors(entry=entry) | safe -}}.
+  {% else %}
+    {{- self::bibstrip(in=entry.tags.editor) -}}.
+  {% endif %}
+  <em>{{- self::title(entry=entry) | trim() | safe -}}</em>,
+  {% if entry.tags | get(key="chapter") != "" %}
+  chap. {{ self::bibstrip(in=entry.tags.chapter) -}}
+  {% endif %}
+  {% if entry.tags | get(key="pages") != "" %}
+  , Pages {{ self::bibstrip(in=entry.tags.pages) -}}.
+  {% endif %}
+  ({{- self::bibstrip(in=entry.tags.publisher) -}}, {{ entry.tags.year -}}).
+{% endmacro chapter %}
+
+{# 
+  @incollection entry type
+
+  required:
+    - author
+    - title
+    - booktitle
+    - year
+  
+  optional:
+    - publisher (TODO)
+#}
+{% macro incollection(entry) %}
+  {{- self::authors(entry=entry) | safe -}}.
+  {{- self::title(entry=entry) -}}
+  In <em>{{- self::bibstrip(in=entry.tags.booktitle) -}}</em> 
+  ({{- self::bibstrip(in=entry.tags.publisher) -}}, {{ entry.tags.year -}}).
+{% endmacro incollection %}
+
+{# 
+  @booklet entry type
+
+  required:
+    - title
+  
+  optional:
+    - author
+    - howpublished
+    - year
+#}
+{% macro booklet(entry) %}
+  {% if entry.tags | get(key="author") != "" %}
+    {{- self::authors(entry=entry) | safe -}}.
+  {% endif %}
+  {{- self::title(entry=entry) | safe -}}
+  {% if entry.tags | get(key="howpublished") != "" %}
+    {{- self::bibstrip(in=entry.tags.howpublished) | trim() | safe -}}
+  {% endif %}
+  {% if entry.tags | get(key="year") != "" %}
+    ({{- entry.tags.year -}}).
+  {% endif %}
+{% endmacro %}
+
+{# 
+  @proceedings entry type
+
+  required:
+    - title
+    - publisher
+    - year
+#}
+{% macro proceedings(entry) %}
+  <em>{{- self::title(entry=entry) | safe -}}</em> 
+  ({{- self::bibstrip(in=entry.tags.publisher) -}}, {{ entry.tags.year -}}).
+{% endmacro proceedings %}
+
+{# 
+  generic @XXXthesis entry type
+
+  required:
+    - author
+    - title
+    - type
+    - school
+    - year
+#}
+{% macro thesis(entry, type) %}
+  {{- self::authors(entry=entry) | safe -}}.
+  {{- self::title(entry=entry) | safe -}}
+  {{- type -}}, {{ self::bibstrip(in=entry.tags.school) | trim() | safe -}}. ({{- entry.tags.year -}})
+{% endmacro thesis %}
+
+{#
+  @mastersthesis entry
+
+  wrapper for @thesis with entry="Master's thesis"
+#}
+{% macro mastersthesis(entry) %}
+  {{ self::thesis(entry=entry, type="Master's thesis") }}
+{% endmacro %}
+
+{#
+  @phdthesis entry
+
+  wrapper for @thesis with entry="Ph.D. thesis"
+#}
+{% macro phdthesis(entry) %}
+  {{ self::thesis(entry=entry, type="Ph.D. thesis") }}
+{% endmacro %}
+
+{# 
+  @manual entry type
+
+  required:
+    - title
+  
+  optional:
+    - author
+    - organization (TODO)
+    - year         (TODO)
+#}
+{% macro manual(entry) %}
+  {% if entry.tags | get(key="author") != "" %}
+    {{- self::authors(entry=entry) | safe -}}.
+  {% endif %}
+  <em>{{- self::title(entry=entry) | safe -}}</em> 
+  {# TODO OPTIONAL RENDERING FOR organization AND year #}
+  ({{- self::bibstrip(in=entry.tags.organization) -}}, {{ entry.tags.year -}}).
+{% endmacro manual %}
+
+{# 
+  @techreport entry type
+
+  required:
+    - author
+    - title
+    - institution
+    - year
+  
+  optional:
+    - number (TODO)
+#}
+{% macro techreport(entry) %}
+  {{- self::authors(entry=entry) | safe -}}.
+  {{- self::title(entry=entry) | safe -}}
+  {{- entry.tags.number -}}, {{- self::bibstrip(in=entry.tags.institution) -}} ({{- entry.tags.year -}})
+{% endmacro techreport %}
+
+{# 
+  @unpublished entry type
+
+  required:
+    - author
+    - title
+    - year
+#}
+{% macro unpublished(entry) %}
+  {{- self::authors(entry=entry) | safe -}}.
+  {{- self::title(entry=entry) | safe -}}
+  ({{- entry.tags.year -}})
+{% endmacro unpublished %}
+
+{# 
+  @misc entry type
+  
+  optional:
+    - author
+    - title
+    - year
+    - archivePrefix or howpublished or eprinttype
+#}
+{% macro misc(entry) %} 
+  TODO 
+{% endmacro misc %}
+
+
+{#
+  macro format_ref
+
+  calls the correct macro for the given entry type to format the bibtex reference
+#}
+{% macro format_ref(entry) %}
+  {% if entry.entry_type == "article" %}
+    {{- self::article(entry=entry) | safe -}}
+  {% elif entry.entry_type == "book" %}
+    {{- self::book(entry=entry) | safe -}}
+  {% elif entry.entry_type == "inbook" %}
+    {{- self::inbook(entry=entry) | safe -}}
+  {% elif entry.entry_type == "booklet" %}
+    {{- self::booklet(entry=entry) | safe -}}
+  {% elif entry.entry_type == "incollection" %}
+    {{- self::incollection(entry=entry) | safe -}}
+  {% elif entry.entry_type == "proceedings" %}
+    {{- self::proceedings(entry=entry) | safe -}}
+  {% elif entry.entry_type == "inproceedings" %}
+    {{- self::incollection(entry=entry) | safe -}}
+  {% elif entry.entry_type == "mastersthesis" %}
+    {{- self::mastersthesis(entry=entry) | safe -}}  
+  {% elif entry.entry_type == "phdthesis" %}
+    {{- self::phdthesis(entry=entry) | safe -}}
+  {% elif entry.entry_type == "manual" %}
+    {{- self::manual(entry=entry) | safe -}}
+  {% elif entry.entry_type == "techreport" %}
+    {{- self::techreport(entry=entry) | safe -}}
+  {% elif entry.entry_type == "unpublished" %}
+    {{- self::unpublished(entry=entry) | safe -}}
+  {% else %}
+    Unknown publication type: <em>{{entry.entry_type}}</em>
+  {% endif %}
+{% endmacro format_ref %}

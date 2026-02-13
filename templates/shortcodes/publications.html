@@ -1,14 +1,10 @@
+
 {%- import 'macros/author.html' as author_renderer -%}
 {%- import 'macros/reference.html' as ref_renderer -%}
+{%- import 'macros/bibmacros.html' as macros -%}
 
 {% set bibtex = load_data(path=path, format="bibtex") %} 
 {% set publis = bibtex.bibliographies | sort(attribute="tags.year") | reverse %}
-{% set abbrev = true %}
-{% set last_first = false %}
-{% set use_ampersand = true %}
-{% set max_authors = 6 %}
-{% set stand_out_first = config.extra.author_first %}
-{% set stand_out_last = config.extra.author_last %}
 
 <ul class="publication-list">
   {% for entry in publis %}
@@ -23,18 +19,13 @@
       {% endif %}
     {% endif %}
 
-    {% set title = entry.tags.title | replace(from="{", to="") | replace(from="}", to="") %}
-    {% set authors = entry.tags.author | replace(from="\'e", to="é") | replace(from="\`a",to="à") | split(pat="and") %}
-
-    {%- set authors_fmt = author_renderer::bibtex_author_list(authors=authors, abbr_first=abbrev, last_first=last_first, stand_out_first=stand_out_first, stand_out_last=stand_out_last) -%}
-
-    <li class="publication-list-item">
-    {%- if entry.entry_type == "misc" -%}
-      {{ ref_renderer::preprint(title=title, year=entry.tags.year, authors_fmt=authors_fmt, publisher=entry.tags.publisher, doi=entry.tags.doi) }}
-    {%- elif entry.entry_type == "article" -%}
-      {{ ref_renderer::journal(title=title, year=entry.tags.year, authors_fmt=authors_fmt, journal=entry.tags.journal, doi=entry.tags.doi) }}
-    {%- endif -%}
+    <li>
+      <code>{{ entry.entry_type }}</code>
+      <br>
+      {{ macros::format_ref(entry=entry) }}
+      <hr>
     </li>
+
 
   {% endfor %}
 </ul>
