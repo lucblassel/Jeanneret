@@ -87,10 +87,10 @@
   {{- self::authors(entry=entry) | safe -}}.
   {{- self::title(entry=entry) | safe -}} 
   <em>{{- self::bibstrip(in=entry.tags.journal) | safe -}}</em>
-  {%- if entry.tags | get(key="volume") != "" -%}
+  {%- if entry.tags | get(key="volume",default="") != "" -%}
     <b>{{ entry.tags.volume }}</b>
   {%- endif -%},
-  {%- if entry.tags | get(key="pages") != "" -%}
+  {%- if entry.tags | get(key="pages",default="") != "" -%}
     {{ self::bibstrip(in=entry.tags.pages) }}&nbsp;
   {%- endif -%}
   ({{ entry.tags.year }}).
@@ -106,7 +106,7 @@
     - year
 #}
 {% macro book(entry) %}
-  {% if entry.tags | get(key="author") != "" %}
+  {% if entry.tags | get(key="author",default="") != "" %}
   {{- self::authors(entry=entry) | safe -}}.
   {% else %}
     {{- self::bibstrip(in=entry.tags.editor) -}}.
@@ -126,16 +126,16 @@
     - year
 #}
 {% macro inbook(entry) %}
-  {% if entry.tags | get(key="author") != "" %}
+  {% if entry.tags | get(key="author",default="") != "" %}
   {{- self::authors(entry=entry) | safe -}}.
   {% else %}
     {{- self::bibstrip(in=entry.tags.editor) -}}.
   {% endif %}
   <em>{{- self::title(entry=entry) | trim() | safe -}}</em>,
-  {% if entry.tags | get(key="chapter") != "" %}
+  {% if entry.tags | get(key="chapter",default="") != "" %}
   chap. {{ self::bibstrip(in=entry.tags.chapter) -}}
   {% endif %}
-  {% if entry.tags | get(key="pages") != "" %}
+  {% if entry.tags | get(key="pages",default="") != "" %}
   , Pages {{ self::bibstrip(in=entry.tags.pages) -}}.
   {% endif %}
   ({{- self::bibstrip(in=entry.tags.publisher) -}}, {{ entry.tags.year -}}).
@@ -151,13 +151,14 @@
     - year
   
   optional:
-    - publisher (TODO)
+    - publisher
 #}
 {% macro incollection(entry) %}
   {{- self::authors(entry=entry) | safe -}}.
   {{- self::title(entry=entry) -}}
   In <em>{{- self::bibstrip(in=entry.tags.booktitle) -}}</em> 
-  ({{- self::bibstrip(in=entry.tags.publisher) -}}, {{ entry.tags.year -}}).
+  ({% if entry.tags | get(key="publisher",default="") != "" %}{{- self::bibstrip(in=entry.tags.publisher) -}}, {% endif %}
+  {{ entry.tags.year -}}).
 {% endmacro incollection %}
 
 {# 
@@ -172,14 +173,14 @@
     - year
 #}
 {% macro booklet(entry) %}
-  {% if entry.tags | get(key="author") != "" %}
+  {% if entry.tags | get(key="author",default="") != "" %}
     {{- self::authors(entry=entry) | safe -}}.
   {% endif %}
   {{- self::title(entry=entry) | safe -}}
-  {% if entry.tags | get(key="howpublished") != "" %}
-    {{- self::bibstrip(in=entry.tags.howpublished) | trim() | safe -}}
+  {% if entry.tags | get(key="howpublished",default="") != "" %}
+    {{- self::bibstrip(in=entry.tags.howpublished, default="") | trim() | safe -}}
   {% endif %}
-  {% if entry.tags | get(key="year") != "" %}
+  {% if entry.tags | get(key="year", default="") != "" %}
     ({{- entry.tags.year -}}).
   {% endif %}
 {% endmacro %}
@@ -239,16 +240,29 @@
   
   optional:
     - author
-    - organization (TODO)
-    - year         (TODO)
+    - organization
+    - year        
 #}
 {% macro manual(entry) %}
-  {% if entry.tags | get(key="author") != "" %}
+  {% if entry.tags | get(key="author",default="") != "" %}
     {{- self::authors(entry=entry) | safe -}}.
   {% endif %}
-  <em>{{- self::title(entry=entry) | safe -}}</em> 
-  {# TODO OPTIONAL RENDERING FOR organization AND year #}
-  ({{- self::bibstrip(in=entry.tags.organization) -}}, {{ entry.tags.year -}}).
+  <em>{{- self::title(entry=entry) | safe -}}</em>
+
+  {% set orga = entry.tags | get(key="organization", default="") %}
+  {% set year = entry.tags | get(key="year", default="") %}
+  {% set parts = [] %}
+  {% if orga != "" %}
+    {% set parts = parts | concat(with=orga) %}
+  {% endif %}
+  {% if year != "" %}
+    {% set parts = parts | concat(with=year) %}
+  {% endif %}
+
+  {% if parts | length() > 0 %}
+  ({{ parts | join(sep=", ") }})
+  {% endif %}
+
 {% endmacro manual %}
 
 {# 
@@ -261,12 +275,13 @@
     - year
   
   optional:
-    - number (TODO)
+    - number
 #}
 {% macro techreport(entry) %}
   {{- self::authors(entry=entry) | safe -}}.
   {{- self::title(entry=entry) | safe -}}
-  {{- entry.tags.number -}}, {{- self::bibstrip(in=entry.tags.institution) -}} ({{- entry.tags.year -}})
+  {% if entry.tags | get(key="number", default="" != "") %}{{- entry.tags.number -}}, {% endif %}
+  {{- self::bibstrip(in=entry.tags.institution) -}} ({{- entry.tags.year -}})
 {% endmacro techreport %}
 
 {# 

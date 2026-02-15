@@ -2,7 +2,10 @@
 {%- import 'macros/bibmacros.html' as macros -%}
 
 {% set bibtex = load_data(path=path, format="bibtex") %} 
-{% set publis = bibtex.bibliographies | sort(attribute="tags.year") | reverse %}
+{% set publis = bibtex.bibliographies  %}
+{% if sort_by_year %}
+  {% set_global publis = publis | sort(attribute="tags.year") | reverse %}
+{% endif %}
 
 <ul class="publication-list">
   {% for entry in publis %}
