@@ -38,10 +38,15 @@ iframe {
     font-size: 20px;
   }
 }
-  
+
 /* Headings */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-bottom: .5rem;
   font-weight: bold;
   line-height: 1.25;
@@ -49,6 +54,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+  margin-top: 1rem;
   font-size: 2rem;
 }
 
@@ -62,7 +68,9 @@ h3 {
   font-size: 1.25rem;
 }
 
-h4, h5, h6 {
+h4,
+h5,
+h6 {
   margin-top: 1rem;
   font-size: 1rem;
 }
@@ -79,14 +87,16 @@ table {
   border-spacing: 0;
 }
 
-th,td {
+th,
+td {
   text-align: left;
   vertical-align: top;
 }
 
 /* Code */
 
-pre, code {
+pre,
+code {
   font-family: $mono-font;
 }
 
@@ -113,9 +123,16 @@ pre code {
 a {
   color: #3366CC; // Wiki Blue
   text-decoration: none;
+  font-weight: 500;
 }
 
-a:hover, a:focus {
+.content a {
+  text-decoration: underline dotted;
+  text-decoration-thickness: 0.07rem;
+}
+
+a:hover,
+a:focus {
   text-decoration: underline;
+  text-decoration-thickness: 0.07rem;
 }
-

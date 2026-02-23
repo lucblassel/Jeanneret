@@ -17,6 +17,4 @@ links = [
   {name = "Posts", url = "posts"},
 ]
 css_debug = false
-author_first = "Donald"
-author_last = "Knuth"
 
