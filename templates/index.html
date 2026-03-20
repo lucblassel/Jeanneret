@@ -1,3 +1,5 @@
+{%- import 'macros/icon.html' as macros -%}
+
 <!DOCTYPE html>
 <html lang="{{ lang }}">
   <head>
@@ -31,8 +33,17 @@
             {% for link in config.extra.links %}
               {% set url = get_url(path=link.url) %}
               <a href="{{ url }}"><h2>{{link.name}}</h2></a>
-            {% endfor %}            
+            {% endfor %}
           </nav>
+
+          {% if config.extra | get(key="external_links", default=[]) | length() > 0 %}
+            <div class="icon-list">
+              {% for link in config.extra.external_links %}
+                {% set linkname = link.name | lower() | trim() %}
+                <a class="icon-link" href={{ link.url | safe}}>{{- macros::icon(icon_name=linkname) -}}</a> 
+              {% endfor %}
+            </div>
+          {% endif %}
         </header>
 
         <!--Main Page Content-->

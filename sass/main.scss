@@ -26,10 +26,51 @@
   outline: 1px solid red;
 }
 
+.icon-link svg {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25rem;
+  fill: currentColor;
+
+}
+
+.icon-link:hover,
+.icon-link:focus {
+  text-decoration: none;
+}
+
+.icon-list {
+  margin: .5em auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .625rem;
+}
+
+.publication-item {
+  margin-top: .5em;
+}
+
+.highlighted-author {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 // Sidebar / header
-.site-header { // By default centered
+.site-header {
+  // By default centered
   text-align: center;
   padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+
+  a,
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 // Navigation links
@@ -39,7 +80,9 @@
   justify-content: center;
   gap: .5rem;
 
-  a,h1,h2{
+  a,
+  h1,
+  h2 {
     margin: 0;
     padding: 0;
   }
@@ -57,10 +100,10 @@
 }
 
 .site-footer {
- text-align: center;
- margin-top: auto;
- font-size: 90%;
- padding: 0.5rem 0;
+  text-align: center;
+  margin-top: auto;
+  font-size: 90%;
+  padding: 0.5rem 0;
 }
 
 
@@ -68,7 +111,8 @@
  * Responsive media queries 
  */
 
-@media(min-width: 48em) { 
+@media(min-width: 48em) {
+
   // Sticky top left if screen is wide-enough
   .site-header {
     position: fixed;
@@ -79,19 +123,23 @@
     padding-left: 2rem;
   }
 
+  .icon-list {
+    margin: .5em 0;
+  }
+
   // Switch to col flex if page is wide-enough
   .site-nav {
     flex-direction: column;
-      a {
-        margin-left: 1rem;
-      }
+
+    a {
+      margin-left: 1rem;
+    }
   }
-  
+
   // Limit width of the content stack if screen is wider
-  .content-stack { 
+  .content-stack {
     max-width: 38rem;
     margin-left: 18rem;
     margin-right: 2rem;
   }
 }
-

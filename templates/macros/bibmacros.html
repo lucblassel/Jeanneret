@@ -34,7 +34,7 @@
   {% for author in stripped | replace(from=" and ",to=" AND ") | split(pat=" AND ") %}
     {% set author = author | trim()  %}
     {% if num == highlight %}
-      {% set_global parts = parts | concat(with="<b>" ~ author ~ "</b>")%}      
+      {% set_global parts = parts | concat(with="<span class='highlighted-author'>" ~ author ~ "</span>")%}      
     {% else %}
       {% set_global parts = parts | concat(with=author)%}      
     {% endif %}
@@ -107,7 +107,7 @@
 #}
 {% macro book(entry) %}
   {% if entry.tags | get(key="author",default="") != "" %}
-  {{- self::authors(entry=entry) | safe -}}.
+    {{- self::authors(entry=entry) | safe -}}.
   {% else %}
     {{- self::bibstrip(in=entry.tags.editor) -}}.
   {% endif %}
@@ -199,6 +199,27 @@
 {% endmacro proceedings %}
 
 {# 
+  @inproceedings entry type
+
+  required:
+    - author
+    - title
+    - booktitle
+    - year
+  
+  optional:
+    - organization
+#}
+{% macro inproceedings(entry) %}
+  {{- self::authors(entry=entry) | safe -}}.
+  {{- self::title(entry=entry) -}}
+  In <em>{{- self::bibstrip(in=entry.tags.booktitle) -}}</em> 
+  ({% if entry.tags | get(key="organization",default="") != "" %}{{- self::bibstrip(in=entry.tags.organization) -}}, {% endif %}
+  {{ entry.tags.year -}}).
+{% endmacro inproceedings %}
+
+
+{# 
   generic @XXXthesis entry type
 
   required:
@@ -280,7 +301,7 @@
 {% macro techreport(entry) %}
   {{- self::authors(entry=entry) | safe -}}.
   {{- self::title(entry=entry) | safe -}}
-  {% if entry.tags | get(key="number", default="" != "") %}{{- entry.tags.number -}}, {% endif %}
+  {% if entry.tags | get(key="number", default="") != "" %}{{- entry.tags.number -}}, {% endif %}
   {{- self::bibstrip(in=entry.tags.institution) -}} ({{- entry.tags.year -}})
 {% endmacro techreport %}
 
@@ -300,15 +321,25 @@
 
 {# 
   @misc entry type
-  
+ 
+  required: 
+    - title
   optional:
     - author
-    - title
     - year
     - archivePrefix or howpublished or eprinttype
 #}
 {% macro misc(entry) %} 
-  TODO 
+  {% if entry.tags | get(key="author",default="") != "" %}{{- self::authors(entry=entry) | safe -}}, {% endif %}
+  {{- self::title(entry=entry) | safe -}}
+  {% if entry.tags | get(key="archiveprefix", default="") != "" %}
+    <em>{{ entry.tags.archiveprefix }}</em>
+  {% elif entry.tags | get(key="eprinttype", default="") != "" %}
+     <em>{{ entry.tags.eprinttype }}</em>
+  {% elif entry.tags | get(key="howpublished", default="") != "" %}
+     <em>{{ entry.tags.howpublished }}</em>
+  {% endif %}
+  {% if entry.tags | get(key="year",default="") != "" %}({{- entry.tags.year -}}){% endif %}
 {% endmacro misc %}
 
 
@@ -316,6 +347,8 @@
   macro format_ref
 
   calls the correct macro for the given entry type to format the bibtex reference
+
+  The @inproceedings and @conference entry types are rendered as @incollection entries
 #}
 {% macro format_ref(entry) %}
   {% if entry.entry_type == "article" %}
@@ -331,7 +364,9 @@
   {% elif entry.entry_type == "proceedings" %}
     {{- self::proceedings(entry=entry) | safe -}}
   {% elif entry.entry_type == "inproceedings" %}
-    {{- self::incollection(entry=entry) | safe -}}
+    {{- self::inproceedings(entry=entry) | safe -}}  
+  {% elif entry.entry_type == "conference" %}
+    {{- self::inproceedings(entry=entry) | safe -}}
   {% elif entry.entry_type == "mastersthesis" %}
     {{- self::mastersthesis(entry=entry) | safe -}}  
   {% elif entry.entry_type == "phdthesis" %}
@@ -342,6 +377,8 @@
     {{- self::techreport(entry=entry) | safe -}}
   {% elif entry.entry_type == "unpublished" %}
     {{- self::unpublished(entry=entry) | safe -}}
+  {% elif entry.entry_type == "misc" %}
+    {{- self::misc(entry=entry) | safe -}}
   {% else %}
     Unknown publication type: <em>{{entry.entry_type}}</em>
   {% endif %}

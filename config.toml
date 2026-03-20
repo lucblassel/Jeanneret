@@ -11,10 +11,31 @@ title = "Jeanneret"
 
 author = "Luc Blassel"
 
+[markdown.highlighting]
+theme = "github-dark"
+
 [extra]
 links = [
   {name = "About", url = "about"},
   {name = "Posts", url = "posts"},
 ]
-css_debug = false
+# The name variables define the icon used.
+# By default if the name is not recognized 
+# the "generic" icon is used.
+# The list order is the order of appearance
+external_links = [ 
+  {name="github"  , url="https://github.com/lucblassel/"},
+  {name="googlescholar" , url="https://scholar.google.com/citations?user=RYs6rFwAAAAJ&hl=en"},
+  {name="orcid"   , url="https://orcid.org/0000-0002-6598-7673"},
+  {name="bluesky" , url="https://bsky.app/profile/lblassel.bsky.social"},
+  {name="twitter" , url="https://bsky.app/profile/lblassel.bsky.social"},
+  {name="gitlab" , url="https://bsky.app/profile/lblassel.bsky.social"},
+  {name="twitch" , url="https://bsky.app/profile/lblassel.bsky.social"},
+  {name="youtube" , url="https://bsky.app/profile/lblassel.bsky.social"},
+  {name="soundcloud" , url="https://bsky.app/profile/lblassel.bsky.social"},
+  {name="librarything" , url="https://bsky.app/profile/lblassel.bsky.social"},
+  {name="generic" , url="https://lucblassel.com"},
+]
+# Supported icons names are:
 
+css_debug = false

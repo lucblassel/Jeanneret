@@ -1,6 +1,8 @@
 +++
-title = "What is Zola"
+title = "What is Zola ?"
 date = 2017-09-24
+authors = ["J.F. Kennedy", "P.E. Jeanneret"]
+description = "A simple example post to show formatting"
 +++
 
 # Inter et

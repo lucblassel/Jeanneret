@@ -135,4 +135,10 @@ a:hover,
 a:focus {
   text-decoration: underline;
   text-decoration-thickness: 0.07rem;
+  filter: brightness(0.7);
+}
+
+/* */
+.post-description {
+  font-style: italic;
 }

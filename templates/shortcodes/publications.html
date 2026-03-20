@@ -20,13 +20,7 @@
       {% endif %}
     {% endif %}
 
-    <li>
-      <code>{{ entry.entry_type }}</code>
-      <br>
-      {{ macros::format_ref(entry=entry) }}
-      <hr>
-    </li>
-
+    <li class="publication-item">{{ macros::format_ref(entry=entry) | safe }}</li>
 
   {% endfor %}
 </ul>

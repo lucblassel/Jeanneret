@@ -1,0 +1,10 @@
+{% set data = load_data(path=path) %}
+{% if language != "" %}
+  {{ "```" ~ language ~ "
+"~ data ~ "
+```" | markdown | safe }}
+{% else %}
+  {{ "```
+" ~ data ~ "
+```" | markdown | safe }}
+{% endif %}
