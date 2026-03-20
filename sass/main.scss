@@ -14,12 +14,52 @@
  *  Some of this is adapted from Hyde theme
  */
 
+// Import colors
+@import "theme";
 
 // Apply global CSS reset
 @import "reset";
 
 // Typographic settings
 @import "typography";
+
+:root {
+  color-scheme: light dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  // For user override
+  img {
+    filter: contrast(1);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  // For user override
+  img {
+    filter: contrast(var(--dark-img-contrast));
+  }
+}
+
+// For system default setting
+@media(prefers-color-scheme: dark) {
+  img {
+    filter: contrast(var(--dark-img-contrast));
+  }
+}
+
+.layout {
+  color: light-dark(var(--text-light-color), var(--text-dark-color));
+  background-color: light-dark(var(--bg-light-color), var(--bg-dark-color));
+
+  a {
+    color: light-dark(var(--link-light-color), var(--link-dark-color));
+  }
+}
 
 // debug view
 .debug * {
@@ -71,6 +111,10 @@
     margin: 0;
     padding: 0;
   }
+
+  a {
+    color: var(--text-color);
+  }
 }
 
 // Navigation links
@@ -86,6 +130,8 @@
     margin: 0;
     padding: 0;
   }
+
+
 }
 
 // Main content
@@ -106,6 +152,13 @@
   padding: 0.5rem 0;
 }
 
+.page-title {
+  font-size: 250%;
+}
+
+.page-header {
+  margin-bottom: 0.5rem;
+}
 
 /*
  * Responsive media queries 
@@ -141,5 +194,60 @@
     max-width: 38rem;
     margin-left: 18rem;
     margin-right: 2rem;
+  }
+}
+
+// light-dark toggle
+.theme-toggle {
+  --bg: light-dark(var(--bg-light-color), var(--bg-dark-color));
+  --fg: light-dark(#333, #ddd);
+  --slider: light-dark(#fff, #444);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 5em;
+  padding: .2em;
+  border-radius: 999px;
+  background: var(--bg);
+
+  // Hide radio
+  input {
+    display: none;
+  }
+
+  label {
+    cursor: pointer;
+    color: var(--fg);
+  }
+
+  label:hover {
+    opacity: 0.6;
+  }
+
+  input:checked+label {
+    transform: scale(1.1);
+  }
+
+  .slider {
+    position: absolute;
+    top: .2em;
+    bottom: .2em;
+    width: calc(100% / 3);
+    border-radius: 999px;
+    background: var(--slider);
+    transition: transform 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  #theme-light:checked~.slider {
+    transform: translateX(0%);
+  }
+
+  #theme-system:checked~.slider {
+    transform: translateX(100%);
+  }
+
+  #theme-dark:checked~.slider {
+    transform: translateX(200%);
   }
 }
