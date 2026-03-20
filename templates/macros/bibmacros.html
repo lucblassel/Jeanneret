@@ -32,7 +32,7 @@
   {# Build list of formated parts #}
   {% set stripped = self::bibstrip(in=entry.tags.author) %}
   {% for author in stripped | replace(from=" and ",to=" AND ") | split(pat=" AND ") %}
-    {% set author = author | trim()  %}
+    {% set author = author | trim() | replace(from=", ", to=" ") %}
     {% if num == highlight %}
       {% set_global parts = parts | concat(with="<span class='highlighted-author'>" ~ author ~ "</span>")%}      
     {% else %}
