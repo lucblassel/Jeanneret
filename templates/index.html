@@ -27,7 +27,10 @@
 
         <!--Sidebar/Header-->
         <header class="site-header">
-          <a href="{{ config.base_url }}"><h1 class="site-title">{{ config.title }}</h1></a>
+          <div class="site-title-container">
+            <a href="{{ config.base_url }}"><h1 class="site-title">{{ config.title }}</h1></a>
+            <button id="theme-toggle-button">{{- macros::icon(icon_name="desktop") -}}</button>
+          </div>
 
           <nav class="site-nav">
             {% for link in config.extra.links %}
@@ -44,9 +47,7 @@
               {% endfor %}
             </div>
           {% endif %}
-          <div class="theme-toggle">
-            <button id="theme-toggle-button">{{- macros::icon(icon_name="desktop") -}}</button>
-          </div>
+
         </header>
 
         <!--Main Page Content-->

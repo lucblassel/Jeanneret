@@ -73,7 +73,7 @@
   padding: 0;
   font: inherit;
   cursor: pointer;
-  margin: .5em auto;
+  // margin: .5em auto;
 }
 
 #theme-toggle-button svg {
@@ -141,6 +141,13 @@
   a {
     color: var(--text-color);
   }
+
+  .site-title-container {
+    display: flex;
+    margin: 0 auto;
+    gap: 1rem;
+    align-items: baseline;
+  }
 }
 
 // Navigation links
@@ -164,7 +171,7 @@
 .content-stack {
   max-width: 38rem;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 2rem 0;
   // Ensures footer is at bottom of page
   min-height: 100vh;
   display: flex;
@@ -184,6 +191,32 @@
 
 .page-header {
   margin-bottom: 0.5rem;
+}
+
+// Profile home page
+.profile-header {
+  margin-bottom: 2rem;
+}
+
+.profile-image {
+  width: 80%;
+  border-radius: 100%;
+  margin: 2rem auto;
+}
+
+.profile-image.bordered {
+  border: .1rem solid light-dark(var(--text-light-color), var(--text-dark-color));
+}
+
+.profile-image img {
+  clip-path: circle();
+}
+
+.profile-blurb {
+  width: 80%;
+  font-size: 120%;
+  text-align: center;
+  margin: 1rem auto;
 }
 
 /*
@@ -221,4 +254,17 @@
     margin-left: 18rem;
     margin-right: 2rem;
   }
+
+  .profile-container {
+    margin-top: 5rem;
+  }
+
+  .profile-image {
+    width: 60%;
+  }
+
+  .profile-blurb {
+    font-size: 110%;
+  }
+
 }

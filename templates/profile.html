@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+  <div class="profile-container">
+
+    <div class="profile-header">
+    <div class="profile-image {%if section.extra.profile_border %}bordered{% endif %}">
+        <img src="{{ config.extra | get(key="profile_picture", default="/portrait.jpg") }}"/>
+      </div>
+      <div class="profile-blurb">
+        {{ section.content | safe }}
+      </div>
+    </div>
+
+    {% set n_pages = section.extra | get(key="show_latest_posts", default=0) %}
+    {% set section = get_section(path="posts/_index.md") %}
+    {% set n_avail = section.pages | length() %}
+    {% if n_avail < n_pages %}
+      {% set n_pages = n_avail %}  
+    {% endif %}
+
+    {% if n_pages > 0 %} 
+      <div>
+        <h2>Latest {%if n_pages > 1 %}Posts{% else %}Post{% endif %}:</h2>  
+        <ul class="post-list">
+        {% for post in section.pages | slice(end=n_pages) %}
+        <li>
+          <div class="post-list-item">
+          <span><a href="{{ post.permalink }}"><h2>{{ post.title }}</h2></a> ({{ post.date | date(format="%Y-%m-%d")}})</span>
+          </div>
+        </li>
+        {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+  </div>
+{% endblock %}
