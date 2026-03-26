@@ -45,13 +45,7 @@
             </div>
           {% endif %}
           <div class="theme-toggle">
-            <input type="radio" name="theme" id="theme-dark" value="dark">
-            <label for="theme-dark">D</label>
-            <input type="radio" name="theme" id="theme-system" value="system" checked>
-            <label for="theme-system">S</label>
-            <input type="radio" name="theme" id="theme-light" value="light">
-            <label for="theme-light">L</label>
-            <div class="toggle-slider"></div>
+            <button id="theme-toggle-button">{{- macros::icon(icon_name="desktop") -}}</button>
           </div>
         </header>
 
@@ -69,30 +63,50 @@
   </body>
 
   <script>
+  
     const root = document.documentElement;
-    const radios = document.querySelectorAll('input[name="theme"]');
+    const button = document.getElementById("theme-toggle-button");
 
-    // Apply theme
+    const modes = ["system", "light", "dark"];
+    const icons = {
+      system: '{{- macros::icon(icon_name="desktop") | trim() | safe -}}',
+      light:  '{{- macros::icon(icon_name="sun") | trim() | safe -}}',
+      dark:   '{{- macros::icon(icon_name="moon") | trim() | safe -}}',
+    }
+
+    function getNextTheme(current) {
+      return modes[(modes.indexOf(current) + 1) % modes.length]
+    }
+
+    function updateButton(theme) {
+      const next = getNextTheme(theme);
+      button.innerHTML = icons[next];
+    }
+
     function applyTheme(theme) {
-      if (theme === "system") {
+       if (theme === "system") {
         root.removeAttribute("data-theme");
         localStorage.removeItem("theme");
       } else {
         root.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
       }
+
+      updateButton(theme);
     }
 
-    // Load saved theme
-    const saved = localStorage.getItem("theme") || "system";
-    document.querySelector(`#theme-${saved}`).checked = true;
-    applyTheme(saved);
+    // Load saved or default theme
+    const theme = localStorage.getItem("theme") || "system";
+    applyTheme(theme);
 
-    // Listen for changes
-    radios.forEach(radio => {
-      radio.addEventListener("change", (e) => {
-        applyTheme(e.target.value);
-      });
+    // Toggling logic
+    button.addEventListener("click", () => {
+      const current = localStorage.getItem("theme") || "system";
+      const next = getNextTheme(current);
+      
+      applyTheme(next);
+
     });
+
   </script>
 </html>
