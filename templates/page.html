@@ -20,14 +20,40 @@
     {% if page.description %}
       <p class="post-description">{{ page.description }}</p>
     {% endif %}
-    <span class="post-date"> {{ page.date | date(format="%Y-%m-%d")}}</span>
-    <div class="post-authors">
-      {% for author in page.authors%}
-      <span>{{ author | safe }}</span>
-      {% endfor %}
+    <div class="post-authordate">
+      <span class="post-date"> {{ page.date | date(format="%Y-%m-%d")}}</span>
+      <div class="post-authors">
+        {% for author in page.authors%}
+        <span>{{ author | safe }}</span>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
+
+{% if page.toc %}
+  {% if page.extra.showtoc or config.extra.showtoc %}
+    <div class="post-toc">
+      <h1>Table of Contents</h1>
+      <ul>
+      {% for h1 in page.toc %}
+          <li>
+              <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+              {% if h1.children %}
+                  <ul>
+                      {% for h2 in h1.children %}
+                          <li>
+                              <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+                          </li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endif %}
 
 <article class="post">
   <div class="prose">{{ page.content | safe }}</div>

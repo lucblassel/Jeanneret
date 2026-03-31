@@ -112,6 +112,7 @@
   gap: .625rem;
 }
 
+// Publications and references
 .publication-item {
   margin-top: .5em;
 }
@@ -120,6 +121,7 @@
   font-weight: bold;
   text-decoration: underline;
 }
+
 
 // Sidebar / header
 .site-header {
@@ -164,7 +166,24 @@
     padding: 0;
   }
 
+}
 
+// Post lists
+.post-list h1{
+  margin-bottom: 0;
+}
+
+.post-list {
+  margin-bottom: 3rem;
+}
+
+.post-description {
+  font-style: italic;
+  margin-bottom: 0;
+}
+
+.page-header .post-description {
+  margin-bottom: .5rem;
 }
 
 // Main content
@@ -190,7 +209,22 @@
 }
 
 .page-header {
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+// Post metadata
+.post-authordate {
+  display: flex;
+  gap: 1rem;
+}
+
+.post-date {
+  font-weight: bold;
+}
+
+// Page TOC 
+.post-toc {
+  margin-bottom: 3rem;
 }
 
 // Profile home page
