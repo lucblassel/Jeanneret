@@ -66,9 +66,12 @@ splendidus femina](#genua-ades-mortem-pastor) refert. $q=P(X\geq\alpha); \forall
 veniat `trackballFile`: iniqui temploque narrare Amathusiacasque `class` currant
 aequor subeunt illam:  
 
+
+{% displaymath() %}
 $$
 \nabla\times B = \frac{1}{x}\left(q\pi\mathbf{J} + \frac{\partial\mathbf{E}}{\partial t} \right)
 $$
+{% end %}
 
 ### Images images images
 
@@ -96,4 +99,12 @@ praesignia post tacitaque in diversi gratia valuisse prodigio. Mater vertit sata
 inter motis, sine auras illuc. Rex quo amplecti longa arma, essem referuntur,
 Bacchiadae *deieci Clymene*, tot trahor equus.
 
-
+{% displaymath() %}
+$$
+\begin{align}
+    \frac{1}{x} &=\frac{2}{5} \\
+    x &=\frac{5}{2} \\
+    x &= 2.5
+\end{align}
+$$
+{% end %}
