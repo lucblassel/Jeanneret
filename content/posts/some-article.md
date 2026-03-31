@@ -14,7 +14,7 @@ math = true
 
 Lorem markdownum inde dilataque corpora, superbos exstabant, excessitque subiit;
 peragit! Ripa suspiria truncum instructo, numero litora silvisque et foret me si
-tulit vident. Harundine iuppiter recognoscit unda vestra liquebat iuvenis
+tulit vident. Harundine iuppiter recognoscit unda vestra liquebat iuvenis [^note1]
 adnuit.
 
 ```cpp
@@ -64,7 +64,7 @@ colla usquam placebant tantum. Pars quercum omnipotens, quercus quis ante ira
 lata iacet **parvis prohibebar miseros** manus cortice Orpheus [floresque
 splendidus femina](#genua-ades-mortem-pastor) refert. $q=P(X\geq\alpha); \forall\alpha\in\mathbb{R}$ Ignare terruit rebar
 veniat `trackballFile`: iniqui temploque narrare Amathusiacasque `class` currant
-aequor subeunt illam:  
+aequor subeunt illam[^note2]:  
 
 
 {% displaymath() %}
@@ -108,3 +108,8 @@ $$
 \end{align}
 $$
 {% end %}
+
+
+[^note1]: This is some footnote
+[^note2]: This is another footnote,   
+  That is also multiline...

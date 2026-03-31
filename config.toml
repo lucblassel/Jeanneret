@@ -11,6 +11,9 @@ title = "Jeanneret"
 
 author = "Luc Blassel"
 
+[markdown]
+bottom_footnotes = true
+
 [markdown.highlighting]
 theme = "github-dark"
 
