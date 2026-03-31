@@ -3,6 +3,9 @@ title = "What is Zola ?"
 date = 2017-09-24
 authors = ["J.F. Kennedy", "P.E. Jeanneret"]
 description = "A simple example post to show formatting"
+
+[extra]
+math = true
 +++
 
 # Inter et
@@ -59,9 +62,13 @@ Picea non huic [propriaque](#magis-recepta-iudicis) cuique senatus. Inludens
 tabularia *petebar* arboris virtute ab capite niveis et ut suos quae. Sim atque,
 colla usquam placebant tantum. Pars quercum omnipotens, quercus quis ante ira
 lata iacet **parvis prohibebar miseros** manus cortice Orpheus [floresque
-splendidus femina](#genua-ades-mortem-pastor) refert. Ignare terruit rebar
+splendidus femina](#genua-ades-mortem-pastor) refert. $q=P(X\geq\alpha); \forall\alpha\in\mathbb{R}$ Ignare terruit rebar
 veniat `trackballFile`: iniqui temploque narrare Amathusiacasque `class` currant
-aequor subeunt illam.
+aequor subeunt illam:  
+
+$$
+\nabla\times B = \frac{1}{x}\left(q\pi\mathbf{J} + \frac{\partial\mathbf{E}}{\partial t} \right)
+$$
 
 ### Images images images
 

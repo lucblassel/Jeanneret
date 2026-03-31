@@ -14,10 +14,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400..840;1,400..840&family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
-    <!--<link rel="stylesheet" href="https://db.onlinewebfonts.com/c/7732caef9ed946f7916b3f650e8837c2?family=Harding+Text+Web+Regular+Regular"> -->
 
     <!--Stylesheets-->
     <link rel="stylesheet" type="text/css" href="{{ get_url(path="main.css", trailing_slash=false) }}"> 
+
+    <!--Extra content extendable in other templates-->
+    {% block extra_head %}{% endblock %}
 
     <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   </head>
