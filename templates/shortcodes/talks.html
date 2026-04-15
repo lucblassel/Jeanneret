@@ -12,8 +12,8 @@
     <span class="talk-venue">{{ item["venue"] }}</span>
     {% if item is containing("slides") or item is containing("source") %}
       <span class="talk-slides"> (<span class="talk-slides-links">
-          {%- if item is containing("slides") -%}<a href="{{ item["slides"] }}">slides</a>{%- endif -%}
-          {%- if item is containing("source") -%}<a href="{{ item["source"] }}">source</a>{%- endif -%}
+          {%- if item is containing("slides") -%}<a href="{{ get_url(path=item["slides"]) }}">slides</a>{%- endif -%}
+          {%- if item is containing("source") -%}<a href="{{ get_url(path=item["source"]) }}">source</a>{%- endif -%}
         </span>)
       </span>
     {% endif %}
