@@ -1,0 +1,31 @@
+[
+  {
+    "title": "Modulor Revisited: Human Scale in Contemporary Design",
+    "venue": "Modernist Architecture Symposium",
+    "date": "2024-05-18"
+  },
+  {
+    "title": "From Villa Savoye to Smart Homes: Evolution of Functional Living",
+    "venue": "International Housing Forum",
+    "date": "2024-07-30",
+    "slides": "/files/demo-slides1.pdf"
+  },
+  {
+    "title": "Concrete Visions: The Legacy of Brutalism in Urban Landscapes",
+    "venue": "Urban Design Conference",
+    "date": "2023-10-11",
+    "slides": "/files/demo-slides2.pdf",
+    "source": "/files/demo-slides2.tex"
+  },
+  {
+    "title": "Light, Space, and Form: Principles of Modernist Architecture",
+    "venue": "European Architecture Biennale",
+    "date": "2022-01-23"
+  },
+  {
+    "title": "The Radiant City in the 21st Century",
+    "venue": "Future Cities Summit",
+    "date": "2024-02-07",
+    "comment": "Obtained second place in the Fake Talk Awards"
+  }
+]

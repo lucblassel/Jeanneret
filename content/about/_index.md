@@ -35,3 +35,11 @@ In practice this is achieved with macros defined in the [`bibmacros.html`](https
 
 For any entry in the bibtex file, you can add the `highlight_author={index}` in order to print the highlighted name in bold *(e.g. useful for listing your own publication)*. The index is 0-based, and invalid indices will result in no highlight being applied.
 
+## Talks
+
+You can also use the `talks(path=/path/to/datafile)` shortcode to render a list of presentations you have done. The file can be in one of the file formats parsed by the [Zola](https://www.getzola.org/documentation/templates/overview/#load-data)  *(i.e. `CSV`,`JSON`,`YAML` or `TOML`)*.  
+Each entry must have a `title`, `date` and a `venue` field. Optionally you can also specify a `slides` field containing either the local path to the slides files or a remote URL. If your slides were build using beamer, you can also add an optional `source` field containing the path or remote link to your source files *(e.g. a repository, or a tarball)*. Finally, you can also specify the optional `comment` field to add any supplementary information. 
+
+
+{{ talks(path="/content/about/talks.json") }}
+
