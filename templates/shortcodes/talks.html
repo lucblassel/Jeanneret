@@ -1,12 +1,26 @@
 
-{% set talks_data = load_data(path=path, format="csv") %}
+{% set talks_data = load_data(path=path) | sort(attribute="date") | reverse() %}
 
-<ul>
-  {% for record in talks_data.records %}
-  <li>
-    <b>"{{ record[0] }}"</b> ({{ record[2] | date(format="%B %d %Y", timezone="Europe/Paris") }}), <em>{{ record[1] }}</em> 
-    {% if record[3] != "" %}(<a href="/slides/{{ record[3] }}">slides</a>){% endif %}
-    {% if record[4] != "" %}<br><em>* {{record[4]}}</em>{% endif %}
+<ul class="talk-list">
+  {% for item in talks_data %}
+  
+  <li class="talk-item">
+    <span class="talk-title">“{{ item["title"] }}”</span><br>
+    {% if item is containing("date") %}
+      <span class="talk-date">{{ item["date"] | date(format="%b %d %Y") }}</span>,
+    {% endif %}
+    <span class="talk-venue">{{ item["venue"] }}</span>
+    {% if item is containing("slides") or item is containing("source") %}
+      <span class="talk-slides"> (<span class="talk-slides-links">
+          {%- if item is containing("slides") -%}<a href="{{ item["slides"] }}">slides</a>{%- endif -%}
+          {%- if item is containing("source") -%}<a href="{{ item["source"] }}">source</a>{%- endif -%}
+        </span>)
+      </span>
+    {% endif %}
+    {% if item is containing("comment") %}
+      <br><span class="talk-comment">{{ item["comment"] }}</span>
+    {% endif %}
   </li>
   {% endfor %}
 </ul>
+

@@ -122,6 +122,48 @@
   text-decoration: underline;
 }
 
+// Talks
+.talk-list li {
+  margin-bottom: 0.4rem;
+}
+
+.talk-title {
+  font-weight: bold;
+}
+
+.talk-date {
+  font-size: 90%;
+}
+
+.talk-venue {
+  font-style: italic;
+}
+
+.talk-slides {
+  font-size: 80%;
+}
+
+.talk-slides-links {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.talk-slides-links:not(:last-child) {
+  background: teal;
+  width: 1rem;
+}
+
+.talk-comment::before {
+  content: "*";
+}
+
+.talk-comment {
+  font-style: italic;
+  font-weight: light;
+  font-size: 90%;
+  margin-left: 1rem;
+}
+
 
 // Sidebar / header
 .site-header {
@@ -169,7 +211,7 @@
 }
 
 // Post lists
-.post-list h1{
+.post-list h1 {
   margin-bottom: 0;
 }
 
