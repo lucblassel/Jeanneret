@@ -85,6 +85,9 @@ p {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+  margin-bottom: 1rem;
+  width: 100%;
+  overflow-x: scroll;
 }
 
 th,
@@ -93,11 +96,37 @@ td {
   vertical-align: top;
 }
 
+/* Booktabs style tables */
+/* General styling of all cells */
+table> :is(thead, tbody)>tr> :is(th, td) {
+  padding: 3px;
+  text-align: left;
+}
+
+table>thead>tr> :is(th, td) {
+  border-top: 2px solid;
+  /* Top thick line */
+  border-bottom: 1px solid;
+  /* Below head thin line */
+}
+
+table>tbody>tr:last-child> :is(th, td) {
+  border-bottom: 2px solid;
+  /* Bottom thick line */
+}
+
 /* Code */
 
 pre,
 code {
   font-family: $mono-font;
+}
+
+// Inline code
+code {
+  background-color: light-dark(var(--bg-code-light-color), var(--bg-code-dark-color));
+  padding: 0 0.2rem;
+  border-radius: 0.1rem;
 }
 
 pre {
@@ -136,4 +165,3 @@ a:focus {
   text-decoration-thickness: 0.07rem;
   filter: brightness(0.7);
 }
-
