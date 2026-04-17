@@ -14,6 +14,8 @@
         </a>
         {% if page.description %}
           <p class="post-description">{{ page.description }}</p>
+        {% elif page.summary and config.extra.show_descriptions %}
+          <p class="post-description">{{ page.summary | striptags() | truncate(length=150,end="") | trim() | safe }}...</p>
         {% endif %}
         <span>{{ page.date | date(format="%Y-%m-%d")}}</span>
       </div>
