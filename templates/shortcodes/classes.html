@@ -1,0 +1,30 @@
+{% set class_data = load_data(path=path) | sort(attribute="start") %}
+
+<ul class="class-list">
+  {% for item in class_data %}
+
+  <li class="class-item">
+    <span class="class-title">“{{ item["title"] }}”</span><br />
+    <span class="class-date">{{item["start"]}}</span>-<span class="class-date"
+      >{{item["end"]}}</span
+    >,
+    <span class="class-details"
+      ><span class="class-level">{{item["level"]}}</span>@<span
+        class="class-loc"
+        >{{item["location"]}}</span
+      ></span
+    >
+    {% if item is containing("links") %}
+    <span class="class-slides">
+      (<span class="class-links">
+        {% for name, url in item["links"] %}
+        <a class="class-link" href="{{url}}">{{name}}</a>
+        {% endfor %} </span
+      >)
+    </span>
+    {% endif %} {% if item is containing("comment") %}
+    <br /><span class="class-comment">{{ item["comment"] }}</span>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>

@@ -122,28 +122,34 @@
   text-decoration: underline;
 }
 
-// Talks
-.talk-list li {
+// Talks/classes
+.talk-list li,
+.class-list li {
   margin-bottom: 0.4rem;
 }
 
-.talk-title {
+.talk-title,
+.class-title {
   font-weight: bold;
 }
 
-.talk-date {
+.talk-date,
+.class-date {
   font-size: 90%;
 }
 
-.talk-venue {
+.talk-venue,
+.class-details {
   font-style: italic;
 }
 
-.talk-slides {
+.talk-slides,
+.class-link {
   font-size: 80%;
 }
 
-.talk-slides-links {
+.talk-slides-links,
+.class-links {
   display: inline-flex;
   gap: 0.25rem;
 }
@@ -164,6 +170,11 @@
   margin-left: 1rem;
 }
 
+.class-comment {
+  font-style: italic;
+  font-weight: light;
+  margin-left: 1rem;
+}
 
 // Sidebar / header
 .site-header {
